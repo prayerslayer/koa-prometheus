@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import { expect } from 'chai';
 import prometheus, { getMetrics } from '../src/prometheus';
-import { MOCK_ROUTER, Counter, Summary, noop, buildRequest, sleep } from './utils'
+import { MOCK_ROUTER, Counter, Summary, noop, buildRequest, sleep } from './utils';
 
 
 describe('koa-prometheus', () => {
