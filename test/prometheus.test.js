@@ -39,12 +39,12 @@ describe('koa-prometheus', () => {
           path: '/api/products/:id',
         }, 1)).to.be.true;
         expect(responseTime.observe.calledOnce).to.be.true;
-        const [path, time] = responseTime.observe.firstCall.args;
+        const [path, observedTime] = responseTime.observe.firstCall.args;
         expect(path).to.deep.equal({
           method: 'GET',
           path: '/api/products/:id',
         });
-        expect(time).to.be.above(500);
+        expect(observedTime).to.be.at.least(500);
         done();
       } catch (e) {
         done(e);
