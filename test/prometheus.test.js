@@ -71,19 +71,19 @@ describe('koa-prometheus', () => {
 
     it('should track response time and request rate', async(done) => {
       try {
-        await middleware(buildRequest('/api/products/1'), () => sleep(1000));
+        await middleware(buildRequest('/api/products/1'), () => sleep(500));
         expect(requestRate.inc.calledOnce).to.be.true;
         expect(requestRate.inc.calledWithExactly({
           method: 'GET',
           path: '/api/products/:id',
         }, 1)).to.be.true;
         expect(responseTime.observe.calledOnce).to.be.true;
-        const observeArgs = responseTime.observe.firstCall.args;
-        expect(observeArgs[0]).to.deep.equal({
+        const [path, time] = responseTime.observe.firstCall.args;
+        expect(path).to.deep.equal({
           method: 'GET',
           path: '/api/products/:id',
         });
-        expect(observeArgs[1]).to.be.above(1000).and.be.below(1010);
+        expect(time).to.be.above(500);
         done();
       } catch (e) {
         done(e);
