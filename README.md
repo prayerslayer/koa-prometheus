@@ -59,13 +59,6 @@ $ npm run test:watch    # Run unit tests with Mocha, and watch files for changes
 $ npm run test:cover    # Run unit tests with code coverage by Istanbul
 ```
 
-To launch the documentation site, run:
-
-```sh
-$ npm install -g easystatic
-$ npm start
-```
-
 ### License
 
 MIT © 2016 Nikolaus Piccolotto
