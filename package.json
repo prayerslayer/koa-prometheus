@@ -5,7 +5,11 @@
   "repository": "https://github.com/prayerslayer/koa-prometheus",
   "author": "Nikolaus Piccolotto",
   "license": "MIT",
-  "keywords": ["prometheus", "koa", "monitoring"],
+  "keywords": [
+    "prometheus",
+    "koa",
+    "monitoring"
+  ],
   "main": "index.js",
   "jsnext:main": "index.es6.js",
   "babel": {
@@ -44,6 +48,7 @@
     "eslint-plugin-react": "^5.0.1",
     "istanbul": "^1.0.0-alpha.2",
     "mocha": "^2.4.5",
+    "progress": "^1.1.8",
     "rollup": "^0.26.2",
     "rollup-plugin-babel": "^2.4.0",
     "sinon": "^2.0.0-pre"

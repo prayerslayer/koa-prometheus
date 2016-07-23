@@ -1,47 +1,8 @@
-/**
- * koa-prometheus
- *
- * Copyright © 2016 Nikolaus Piccolotto. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
 import sinon from 'sinon';
 import { expect } from 'chai';
 import prometheus, { getMetrics } from '../src/prometheus';
+import { MOCK_ROUTER, Counter, Summary, noop, buildRequest, sleep } from './utils'
 
-const MOCK_ROUTER = {
-  stack: [{
-    regexp: /^\/api\/products\/.+$/i,
-    path: '/api/products/:id',
-  }, {
-    regexp: /^\/api\/products$/i,
-    path: '/api/products',
-  }],
-};
-
-class Counter {
-  inc() {}
-}
-
-class Summary {
-  observe() {}
-}
-
-function noop() {}
-
-function buildRequest(url, method = 'GET') {
-  return {
-    request: {
-      url,
-      method,
-    },
-  };
-}
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 describe('koa-prometheus', () => {
   describe('middleware', () => {
