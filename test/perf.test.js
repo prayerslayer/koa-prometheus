@@ -2,9 +2,24 @@ import sinon from 'sinon';
 import Progress from 'progress';
 import { expect } from 'chai';
 import prometheus from '../src/prometheus';
-import { MOCK_ROUTER, Counter, Summary, buildRequest, sleep } from './utils';
+import { MOCK_ROUTER, Counter, noop, Summary, buildRequest, sleep } from './utils';
 
 const minus = x => y => y - x;
+
+function initProgress(count, pause) {
+  if (!!process.env.TRAVIS) {
+    return {
+      tick: noop,
+    };
+  }
+  return new Progress(`${count} calls, ${pause} ms duration: ` +
+    ':bar :percent :elapsed s elapsed, :eta s remaining', {
+      total: count,
+      complete: '#',
+      incomplete: '_',
+      width: 100,
+    });
+}
 
 describe('koa-prometheus', () => {
   describe('perf', () => {
@@ -26,13 +41,7 @@ describe('koa-prometheus', () => {
         it(`Perf: ${count} calls of ${pause} ms duration`, async function test(done) {
           this.timeout(2 * pause * count);
           try {
-            const bar = new Progress(`${count} calls, ${pause} ms duration: ` +
-              ':bar :percent :elapsed s elapsed, :eta s remaining', {
-                total: count,
-                complete: '#',
-                incomplete: '_',
-                width: 100,
-              });
+            const bar = initProgress(count, pause);
             for (let i = 0; i < count; i++) {
               await middleware(buildRequest('/bundle.js'), () => sleep(pause));
               bar.tick();
